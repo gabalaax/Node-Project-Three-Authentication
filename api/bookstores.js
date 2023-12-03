@@ -38,9 +38,10 @@ router.get('/:id', async (req, res) => {
 
 router.post('/', authenticate, async (req, res) => {
     try {
-        const { name, location } = req.body;
+        const { ownerId, name, location } = req.body;
         const bookstore = await prisma.bookstore.create({
             data: {
+                ownerId,
                 name,
                 location,
             },
@@ -57,13 +58,14 @@ router.post('/', authenticate, async (req, res) => {
 router.put('/:id', authenticate, async (req, res) => {
     try {
         const { id } = req.params;
-        const { name, location } = req.body;
+        const { ownerId, name, location } = req.body;
 
         const bookstore = await prisma.bookstore.update({
             where: {
                 id: Number(id),
             },
             data: {
+                ownerId,
                 name,
                 location,
             },
